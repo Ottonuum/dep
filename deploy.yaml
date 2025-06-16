@@ -12,8 +12,7 @@ hosts:
     hostname: 'tak22altmae.itmajakas.ee'
     http_user: virt118444
     remote_user: virt118444
-    deploy_path: '~/domeenid/www.tak22nuum.itmajakas.ee/dep/current/public'
-
+    deploy_path: '~/domeenid/www.tak22nuum.itmajakas.ee/sigma'
 tasks:
 
   opcache:clear:
