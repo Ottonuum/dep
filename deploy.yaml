@@ -2,33 +2,33 @@ import:
   - recipe/laravel.php
 
 config:
-  repository: 'git@github.com:Ottonuum/deployer.git'
+  repository: 'git@github.com:Ottonuum/dep.git'
+  keep_releases: 2
+  # shared_files: ['.env']
+  shared_dirs: ['storage']
 
 hosts:
   stage:
-    hostname: 'tak22nuum.itmajakas.ee'
+    hostname: 'tak22altmae.itmajakas.ee'
     http_user: virt118444
     remote_user: virt118444
-    deploy_path: '~/domeenid/www.tak22nuum.itmajakas.ee'
+    deploy_path: '~/domeenid/www.tak22nuum.itmajakas.ee/dep/current/public'
 
 tasks:
+
   opcache:clear:
     - run: killall php84-cgi || true
-  npm:production:
-    - run: "cd {{release_path}} && npm ci"
-    - run: "cd {{release_path}} && npx vite build"
-  sqlite:dbcreate:
-    - run: "cd {{release_path}} && cd database && touch database.sqlite"
+
   deploy:
     - "deploy:prepare"
     - "deploy:vendors"
-    - "npm:production"
     - "artisan:storage:link"
     # - "artisan:optimize:clear"
     # - "artisan:optimize"
     - "deploy:publish"
+
 after:
   deploy:failed: deploy:unlock
-  deploy:prepare: sqlite:dbcreate
+
 before:
   deploy:success: opcache:clear
